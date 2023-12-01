@@ -1,0 +1,6 @@
+{% if admin.hasAccess('list', object) and admin.hasRoute('send') %}
+    <a href="{{ admin.generateObjectUrl('send', object) }}" class="btn btn-sm btn-default" title="Send">
+        <i class="glyphicon glyphicon-envelope"></i>
+        Send
+    </a>
+{% endif %}
