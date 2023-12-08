@@ -6,7 +6,6 @@ namespace Spyck\VisualizationSonataBundle\Admin;
 
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
-use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
 use Sonata\AdminBundle\Form\FormMapper;
 use Spyck\VisualizationBundle\Entity\Widget;
 use Spyck\VisualizationSonataBundle\Controller\WidgetController;
@@ -34,13 +33,6 @@ final class WidgetAdmin extends AbstractAdmin
                 ->add('description')
                 ->add('descriptionEmpty')
                 ->add('adapter')
-                ->add('parameters', ChoiceType::class, [
-                    'choices' => [
-                        'Stacked' => 'stacked',
-                    ],
-                    'multiple' => true,
-                    'required' => false,
-                ])
                 ->add('charts', ChoiceType::class, [
                     'choices' => Widget::getChartData(true),
                     'multiple' => true,
@@ -63,7 +55,6 @@ final class WidgetAdmin extends AbstractAdmin
         $list
             ->add('name')
             ->add('adapter')
-            ->add('parameters', FieldDescriptionInterface::TYPE_ARRAY)
             ->add('active')
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
