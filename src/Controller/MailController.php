@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Spyck\VisualizationSonataBundle\Controller;
 
-use App\Utility\DataUtility;
+use Exception;
 use Spyck\VisualizationBundle\Entity\Mail;
 use Spyck\VisualizationBundle\Service\MailService;
+use Spyck\VisualizationBundle\Utility\DataUtility;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Throwable;
 
 #[AsController]
 final class MailController extends AbstractController
 {
     /**
      * @throws AccessDeniedException
-     * @throws Throwable
+     * @throws Exception
      */
     public function sendAction(MailService $mailService, Request $request): Response
     {
