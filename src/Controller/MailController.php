@@ -38,7 +38,7 @@ final class MailController extends AbstractController
             return $this->redirectToList();
         }
 
-        return $this->renderWithExtraParams('@SpyckVisualizationSonata/mail/send.html.twig', [
+        return $this->render('@SpyckVisualizationSonata/mail/send.html.twig', [
             'mail' => $mail,
             'token' => $this->getCsrfToken(MailController::class),
         ]);
