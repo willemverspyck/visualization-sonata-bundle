@@ -50,13 +50,13 @@ final class LogAdmin extends AbstractAdmin
             ->add('timestamp', DateRangeFilter::class)
             ->add('view', ChoiceFilter::class, [
                 'field_options' => [
-                    'choices' => Log::getViews(),
+                    'choices' => Log::getViewData(),
                 ],
                 'field_type' => ChoiceType::class,
             ])
             ->add('type', ChoiceFilter::class, [
                 'field_options' => [
-                    'choices' => Log::getTypes(),
+                    'choices' => Log::getTypeData(),
                 ],
                 'field_type' => ChoiceType::class,
             ])
@@ -78,10 +78,10 @@ final class LogAdmin extends AbstractAdmin
             ])
             ->add('variables')
             ->add('view', FieldDescriptionInterface::TYPE_CHOICE, [
-                'choices' => Log::getViews(),
+                'choices' => Log::getViewData(),
             ])
             ->add('type', FieldDescriptionInterface::TYPE_CHOICE, [
-                'choices' => Log::getTypes(),
+                'choices' => Log::getTypeData(),
             ])
             ->add('log', null, [
                 'template' => '@SpyckVisualizationSonata/list_break.html.twig',
