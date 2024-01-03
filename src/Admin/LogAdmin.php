@@ -60,11 +60,11 @@ final class LogAdmin extends AbstractAdmin
                 ],
                 'field_type' => ChoiceType::class,
             ])
-            ->add('log', CallbackFilter::class, [
+            ->add('messages', CallbackFilter::class, [
                 'callback' => [$this, 'getCallbackSearchInJson'],
             ])
-            ->add('logIsNull', NullFilter::class, [
-                'field_name' => 'log',
+            ->add('messagesIsNull', NullFilter::class, [
+                'field_name' => 'messages',
             ]);
     }
 
@@ -83,7 +83,7 @@ final class LogAdmin extends AbstractAdmin
             ->add('type', FieldDescriptionInterface::TYPE_CHOICE, [
                 'choices' => Log::getTypeData(),
             ])
-            ->add('log', null, [
+            ->add('messages', null, [
                 'template' => '@SpyckVisualizationSonata/list_break.html.twig',
             ])
             ->add(ListMapper::NAME_ACTIONS, null, [
