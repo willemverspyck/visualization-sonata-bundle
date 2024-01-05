@@ -9,9 +9,10 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\Form\Type\CollectionType;
+use Spyck\SonataExtension\Form\Type\ParameterType;
+use Spyck\SonataExtension\Utility\AutocompleteUtility;
 use Spyck\VisualizationBundle\Entity\Dashboard;
 use Spyck\VisualizationBundle\Entity\UserInterface;
-use Spyck\VisualizationSonataBundle\Form\Type\ParameterType;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 #[AutoconfigureTag('sonata.admin', [
@@ -22,8 +23,6 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 ])]
 final class DashboardAdmin extends AbstractAdmin
 {
-    protected array $removeRoutes = [];
-
     protected function configureFormFields(FormMapper $form): void
     {
         $form
@@ -39,7 +38,7 @@ final class DashboardAdmin extends AbstractAdmin
                 ->add('variables', ParameterType::class)
                 ->ifTrue($this->isInstanceOf(UserInterface::class))
                     ->add('user', ModelAutocompleteType::class, [
-                        'callback' => [$this, 'getAutocompleteSearch'],
+                        'callback' => [AutocompleteUtility::class, 'callbackForm'],
                         'placeholder' => 'Choose user',
                         'property' => [
                             'email',
@@ -75,5 +74,10 @@ final class DashboardAdmin extends AbstractAdmin
                     'delete' => [],
                 ],
             ]);
+    }
+
+    protected function getRemoveRoutes(): iterable
+    {
+        return [];
     }
 }

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Spyck\VisualizationSonataBundle\Admin;
 
 use Sonata\AdminBundle\Form\FormMapper;
+use Spyck\SonataExtension\Form\Type\ParameterType;
 use Spyck\VisualizationBundle\Entity\Block;
 use Spyck\VisualizationBundle\Entity\Widget;
-use Spyck\VisualizationSonataBundle\Form\Type\ParameterType;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -18,8 +18,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 ])]
 final class BlockAdmin extends AbstractAdmin
 {
-    protected array $removeRoutes = [];
-
     protected function configureFormFields(FormMapper $form): void
     {
         $form
@@ -44,5 +42,10 @@ final class BlockAdmin extends AbstractAdmin
             ->add('filterView')
             ->add('active')
             ->add('position');
+    }
+
+    protected function getRemoveRoutes(): iterable
+    {
+        return [];
     }
 }

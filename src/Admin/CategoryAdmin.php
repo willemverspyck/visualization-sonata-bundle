@@ -18,8 +18,6 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 ])]
 final class CategoryAdmin extends AbstractAdmin
 {
-    protected array $removeRoutes = ['delete', 'show'];
-
     protected function configureFormFields(FormMapper $form): void
     {
         $form
@@ -48,5 +46,11 @@ final class CategoryAdmin extends AbstractAdmin
                     'delete' => [],
                 ],
             ]);
+    }
+
+    protected function getRemoveRoutes(): iterable
+    {
+        yield 'delete';
+        yield 'show';
     }
 }

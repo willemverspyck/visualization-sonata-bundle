@@ -7,10 +7,10 @@ namespace Spyck\VisualizationSonataBundle\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Spyck\SonataExtension\Form\Type\ParameterType;
 use Spyck\VisualizationBundle\Entity\Mail;
 use Spyck\VisualizationBundle\Entity\UserInterface;
 use Spyck\VisualizationSonataBundle\Controller\MailController;
-use Spyck\VisualizationSonataBundle\Form\Type\ParameterType;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -23,9 +23,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 ])]
 final class MailAdmin extends AbstractAdmin
 {
-    protected array $addRoutes = ['clone', 'send'];
-    protected array $removeRoutes = ['show'];
-
     protected function configureFormFields(FormMapper $form): void
     {
         $form
@@ -82,7 +79,7 @@ final class MailAdmin extends AbstractAdmin
                     'show' => [],
                     'edit' => [],
                     'clone' => [
-                        'template' => '@SpyckVisualizationSonata/list_action_clone.html.twig',
+                        'template' => '@SpyckSonataExtension/list_action_clone.html.twig',
                     ],
                     'activities' => [
                         'template' => '@SpyckVisualizationSonata/mail/list_action_log.html.twig',
@@ -93,5 +90,16 @@ final class MailAdmin extends AbstractAdmin
                     ],
                 ],
             ]);
+    }
+
+    protected function getAddRoutes(): iterable
+    {
+        yield 'clone';
+        yield 'send';
+    }
+
+    protected function getRemoveRoutes(): iterable
+    {
+        yield 'show';
     }
 }

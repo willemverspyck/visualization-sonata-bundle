@@ -26,7 +26,7 @@ final class MailController extends AbstractController
 
         $mail = $this->admin->getSubject();
 
-        DataUtility::assert($mail instanceof Mail, $this->createNotFoundException('Unable to find the mail'));
+        DataUtility::assert($mail instanceof Mail, $this->createNotFoundException('Mail not found'));
 
         if (Request::METHOD_POST === $request->getMethod()) {
             $this->validateCsrfToken($request, MailController::class);

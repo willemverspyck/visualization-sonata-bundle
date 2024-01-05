@@ -21,9 +21,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 ])]
 final class WidgetAdmin extends AbstractAdmin
 {
-    protected array $addRoutes = ['clone'];
-    protected array $removeRoutes = ['show'];
-
     protected function configureFormFields(FormMapper $form): void
     {
         $form
@@ -60,11 +57,25 @@ final class WidgetAdmin extends AbstractAdmin
                 'actions' => [
                     'show' => [],
                     'edit' => [],
+                    'cache' => [
+                        'template' => '@SpyckVisualizationSonata/widget/list_action_cache.html.twig',
+                    ],
                     'clone' => [
-                        'template' => '@SpyckVisualizationSonata/list_action_clone.html.twig',
+                        'template' => '@SpyckSonataExtension/list_action_clone.html.twig',
                     ],
                     'delete' => [],
                 ],
             ]);
+    }
+
+    protected function getAddRoutes(): iterable
+    {
+        yield 'cache';
+        yield 'clone';
+    }
+
+    protected function getRemoveRoutes(): iterable
+    {
+        yield 'show';
     }
 }

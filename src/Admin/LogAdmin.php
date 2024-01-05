@@ -12,8 +12,9 @@ use Sonata\DoctrineORMAdminBundle\Filter\CallbackFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\NullFilter;
+use Spyck\SonataExtension\Filter\DateRangeFilter;
+use Spyck\SonataExtension\Utility\AutocompleteUtility;
 use Spyck\VisualizationBundle\Entity\Log;
-use Spyck\VisualizationSonataBundle\Filter\DateRangeFilter;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -25,8 +26,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 ])]
 final class LogAdmin extends AbstractAdmin
 {
-    protected array $removeRoutes = ['create', 'delete', 'edit'];
-
     protected function configureDatagridFilters(DatagridMapper $datagrid): void
     {
         $datagrid
@@ -61,7 +60,7 @@ final class LogAdmin extends AbstractAdmin
                 'field_type' => ChoiceType::class,
             ])
             ->add('messages', CallbackFilter::class, [
-                'callback' => [$this, 'getCallbackSearchInJson'],
+                'callback' => [AutocompleteUtility::class, 'callbackFilterInJson'],
             ])
             ->add('messagesIsNull', NullFilter::class, [
                 'field_name' => 'messages',
@@ -84,7 +83,7 @@ final class LogAdmin extends AbstractAdmin
                 'choices' => Log::getTypeData(),
             ])
             ->add('messages', null, [
-                'template' => '@SpyckVisualizationSonata/list_break.html.twig',
+                'template' => '@SpyckSonataExtension/list_break.html.twig',
             ])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
@@ -95,5 +94,12 @@ final class LogAdmin extends AbstractAdmin
                     'delete' => [],
                 ],
             ]);
+    }
+
+    protected function getRemoveRoutes(): iterable
+    {
+        yield 'create';
+        yield 'delete';
+        yield 'edit';
     }
 }

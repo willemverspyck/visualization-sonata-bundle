@@ -8,8 +8,9 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
+use Spyck\SonataExtension\Form\Type\ParameterType;
+use Spyck\SonataExtension\Utility\AutocompleteUtility;
 use Spyck\VisualizationBundle\Entity\Menu;
-use Spyck\VisualizationSonataBundle\Form\Type\ParameterType;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 #[AutoconfigureTag('sonata.admin', [
@@ -20,14 +21,12 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 ])]
 final class MenuAdmin extends AbstractAdmin
 {
-    protected array $removeRoutes = ['show'];
-
     protected function configureFormFields(FormMapper $form): void
     {
         $form
             ->with('Fields')
                 ->add('parent', ModelAutocompleteType::class, [
-                    'callback' => [$this, 'getAutocompleteSearch'],
+                    'callback' => [AutocompleteUtility::class, 'callbackForm'],
                     'property' => [
                         'name',
                     ],
@@ -35,7 +34,7 @@ final class MenuAdmin extends AbstractAdmin
                 ])
                 ->add('name')
                 ->add('dashboard', ModelAutocompleteType::class, [
-                    'callback' => [$this, 'getAutocompleteSearch'],
+                    'callback' => [AutocompleteUtility::class, 'callbackForm'],
                     'property' => [
                         'name',
                     ],
@@ -69,5 +68,10 @@ final class MenuAdmin extends AbstractAdmin
                     'delete' => [],
                 ],
             ]);
+    }
+
+    protected function getRemoveRoutes(): iterable
+    {
+        yield 'show';
     }
 }
