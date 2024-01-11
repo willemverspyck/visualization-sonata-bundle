@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Spyck\VisualizationSonataBundle\Admin;
 
+use Exception;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\FieldDescription\FieldDescriptionInterface;
@@ -15,6 +16,7 @@ use Sonata\DoctrineORMAdminBundle\Filter\NullFilter;
 use Spyck\SonataExtension\Filter\DateRangeFilter;
 use Spyck\SonataExtension\Utility\AutocompleteUtility;
 use Spyck\VisualizationBundle\Entity\Log;
+use Spyck\VisualizationBundle\Service\ViewService;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
@@ -26,6 +28,14 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 ])]
 final class LogAdmin extends AbstractAdmin
 {
+    public function __construct(private readonly ViewService $viewService)
+    {
+        parent::__construct();
+    }
+
+    /**
+     * @throws Exception
+     */
     protected function configureDatagridFilters(DatagridMapper $datagrid): void
     {
         $datagrid
@@ -49,13 +59,13 @@ final class LogAdmin extends AbstractAdmin
             ->add('timestamp', DateRangeFilter::class)
             ->add('view', ChoiceFilter::class, [
                 'field_options' => [
-                    'choices' => Log::getViewData(),
+                    'choices' => $this->getViews(true),
                 ],
                 'field_type' => ChoiceType::class,
             ])
             ->add('type', ChoiceFilter::class, [
                 'field_options' => [
-                    'choices' => Log::getTypeData(),
+                    'choices' => Log::getTypes(true),
                 ],
                 'field_type' => ChoiceType::class,
             ])
@@ -67,6 +77,9 @@ final class LogAdmin extends AbstractAdmin
             ]);
     }
 
+    /**
+     * @throws Exception
+     */
     protected function configureListFields(ListMapper $list): void
     {
         $list
@@ -77,10 +90,10 @@ final class LogAdmin extends AbstractAdmin
             ])
             ->add('variables')
             ->add('view', FieldDescriptionInterface::TYPE_CHOICE, [
-                'choices' => Log::getViewData(),
+                'choices' => $this->getViews(),
             ])
             ->add('type', FieldDescriptionInterface::TYPE_CHOICE, [
-                'choices' => Log::getTypeData(),
+                'choices' => Log::getTypes(),
             ])
             ->add('messages', null, [
                 'template' => '@SpyckSonataExtension/list_break.html.twig',
@@ -101,5 +114,19 @@ final class LogAdmin extends AbstractAdmin
         yield 'create';
         yield 'delete';
         yield 'edit';
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function getViews(bool $inverse = false): array
+    {
+        $data = $this->viewService->getViews();
+
+        if (false === $inverse) {
+            return $data;
+        }
+
+        return array_flip($data);
     }
 }

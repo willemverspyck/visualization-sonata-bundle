@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Spyck\VisualizationSonataBundle\Admin;
 
+use Exception;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
 use Spyck\SonataExtension\Form\Type\ParameterType;
+use Spyck\VisualizationBundle\Entity\Log;
 use Spyck\VisualizationBundle\Entity\Mail;
 use Spyck\VisualizationBundle\Entity\UserInterface;
+use Spyck\VisualizationBundle\Service\ViewService;
 use Spyck\VisualizationSonataBundle\Controller\MailController;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,6 +27,14 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 ])]
 final class MailAdmin extends AbstractAdmin
 {
+    public function __construct(private readonly ViewService $viewService)
+    {
+        parent::__construct();
+    }
+
+    /**
+     * @throws Exception
+     */
     protected function configureFormFields(FormMapper $form): void
     {
         $form
@@ -45,7 +57,7 @@ final class MailAdmin extends AbstractAdmin
                 ->add('route')
                 ->add('merge')
                 ->add('view', ChoiceType::class, [
-                    'choices' => Mail::getViews(true),
+                    'choices' => $this->getViews(true),
                 ])
                 ->ifTrue($this->isInstanceOf(UserInterface::class))
                     ->add('users', null, [
@@ -57,12 +69,21 @@ final class MailAdmin extends AbstractAdmin
             ->end();
     }
 
+    /**
+     * @throws Exception
+     */
     protected function configureDatagridFilters(DatagridMapper $datagrid): void
     {
         $datagrid
             ->add('name')
             ->add('schedule')
             ->add('dashboard')
+            ->add('view', ChoiceFilter::class, [
+                'field_options' => [
+                    'choices' => $this->getViews(true),
+                ],
+                'field_type' => ChoiceType::class,
+            ])
             ->add('active');
     }
 
@@ -101,5 +122,19 @@ final class MailAdmin extends AbstractAdmin
     protected function getRemoveRoutes(): iterable
     {
         yield 'show';
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function getViews(bool $inverse = false): array
+    {
+        $data = $this->viewService->getViews();
+
+        if (false === $inverse) {
+            return $data;
+        }
+
+        return array_flip($data);
     }
 }
