@@ -45,7 +45,7 @@ final class MailAdmin extends AbstractAdmin
                 ->add('description', null, [
                     'required' => false,
                 ])
-                ->add('schedule', null, [
+                ->add('schedules', null, [
                     'required' => false,
                 ])
                 ->add('dashboard', null, [
@@ -78,7 +78,7 @@ final class MailAdmin extends AbstractAdmin
     {
         $datagrid
             ->add('name')
-            ->add('schedule')
+            ->add('schedules')
             ->add('dashboard')
             ->add('view', ChoiceFilter::class, [
                 'field_options' => [
@@ -93,7 +93,7 @@ final class MailAdmin extends AbstractAdmin
     {
         $list
             ->add('name')
-            ->add('schedule')
+            ->add('schedules')
             ->add('dashboard')
             ->add('variables')
             ->add('active')

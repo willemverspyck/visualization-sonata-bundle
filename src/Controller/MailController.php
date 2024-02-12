@@ -31,7 +31,7 @@ final class MailController extends AbstractController
         if (Request::METHOD_POST === $request->getMethod()) {
             $this->validateCsrfToken($request, MailController::class);
 
-            $mailService->handleMailMessageByMail($mail);
+            $mailService->executeMailMessageByMail($mail);
 
             $this->addFlash('sonata_flash_success', sprintf('Mail "%s" has been send to users.', $mail));
 
