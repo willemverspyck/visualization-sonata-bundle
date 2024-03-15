@@ -29,6 +29,7 @@ final class DashboardAdmin extends AbstractAdmin
             ->with('Fields')
                 ->add('name')
                 ->add('description')
+                ->add('code')
                 ->add('category')
                 ->add('blocks', CollectionType::class, [], [
                     'edit' => 'inline',
@@ -56,6 +57,7 @@ final class DashboardAdmin extends AbstractAdmin
         $datagrid
             ->add('blocks.widget')
             ->add('name')
+            ->add('code')
             ->add('active');
     }
 
@@ -63,6 +65,7 @@ final class DashboardAdmin extends AbstractAdmin
     {
         $list
             ->add('name')
+            ->add('code')
             ->add('variables')
             ->add('active')
             ->add(ListMapper::NAME_ACTIONS, null, [
