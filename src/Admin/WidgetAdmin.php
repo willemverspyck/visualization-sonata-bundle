@@ -21,6 +21,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 ])]
 final class WidgetAdmin extends AbstractAdmin
 {
+    /**
+     * Option "by_reference" in "charts" needed to use the "setCharts" method in entity. Otherwise, sortable doesn't work.
+     */
     protected function configureFormFields(FormMapper $form): void
     {
         $form
@@ -31,9 +34,11 @@ final class WidgetAdmin extends AbstractAdmin
                 ->add('descriptionEmpty')
                 ->add('adapter')
                 ->add('charts', ChoiceType::class, [
+                    'by_reference' => false,
                     'choices' => Widget::getChartData(true),
                     'multiple' => true,
                     'required' => false,
+                    'sortable' => true,
                 ])
                 ->add('groups')
                 ->add('active')

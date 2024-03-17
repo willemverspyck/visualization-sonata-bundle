@@ -65,7 +65,7 @@ final class LogAdmin extends AbstractAdmin
             ])
             ->add('type', ChoiceFilter::class, [
                 'field_options' => [
-                    'choices' => Log::getTypes(true),
+                    'choices' => Log::getTypes(),
                 ],
                 'field_type' => ChoiceType::class,
             ])
@@ -93,7 +93,7 @@ final class LogAdmin extends AbstractAdmin
                 'choices' => $this->getViews(),
             ])
             ->add('type', FieldDescriptionInterface::TYPE_CHOICE, [
-                'choices' => Log::getTypes(),
+                'choices' => Log::getTypes(false),
             ])
             ->add('messages', null, [
                 'template' => '@SpyckSonataExtension/list_break.html.twig',

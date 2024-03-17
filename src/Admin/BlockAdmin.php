@@ -31,7 +31,7 @@ final class BlockAdmin extends AbstractAdmin
                 'required' => false,
             ])
             ->add('size', ChoiceType::class, [
-                'choices' => Block::getSizeData(true),
+                'choices' => Block::getSizes(),
             ])
             ->add('variables', ParameterType::class)
             ->add('chart', ChoiceType::class, [
