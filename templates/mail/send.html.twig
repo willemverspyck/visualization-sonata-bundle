@@ -12,7 +12,7 @@
                     <p>Are you sure you want to send "{{ admin.toString(mail) }}" to:</p>
                     {% for user in mail.users %}
                         <label class="checkbox">
-                            <input type="checkbox" name="userIds2[]" value="{{ user.id }}"{% if app.user is same as(user) %} checked="checked"{% endif %}>
+                            <input type="checkbox" name="userIds[]" value="{{ user.id }}"{% if app.user is same as(user) %} checked="checked"{% endif %}>
                             {% if user.name is not null %}
                                 {{ user.name }} ({{ user.email }})
                             {% else %}
