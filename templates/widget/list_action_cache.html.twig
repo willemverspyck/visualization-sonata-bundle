@@ -1,4 +1,4 @@
-{% if admin.hasAccess('list', object) and admin.hasRoute('cache') %}
+{% if admin.hasAccess('list', object) and admin.hasRoute('list') and admin.hasRoute('cache') %}
     <a href="{{ admin.generateObjectUrl('cache', object) }}" class="btn btn-sm btn-default" title="{{ 'Cache'|trans({}, admin.translationdomain) }}">
         <i class="fa fa-recycle"></i>
         {{ 'Cache'|trans({}, admin.translationdomain) }}

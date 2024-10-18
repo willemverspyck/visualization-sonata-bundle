@@ -1,4 +1,4 @@
-{% if admin.hasAccess('list', object) and admin.hasRoute('message') %}
+{% if admin.hasAccess('list', object) and admin.hasRoute('list') and admin.hasRoute('message') %}
     <a href="{{ admin.generateObjectUrl('message', object) }}" class="btn btn-sm btn-default" title="{{ 'Send'|trans({}, admin.translationdomain) }}">
         <i class="glyphicon glyphicon-envelope"></i>
         {{ 'Send'|trans({}, admin.translationdomain) }}

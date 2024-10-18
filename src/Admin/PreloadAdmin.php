@@ -82,4 +82,9 @@ final class PreloadAdmin extends AbstractAdmin
         yield 'clone';
         yield 'message';
     }
+
+    protected function getRemoveRoutes(): iterable
+    {
+        return [];
+    }
 }
