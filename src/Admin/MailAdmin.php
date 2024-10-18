@@ -56,6 +56,7 @@ final class MailAdmin extends AbstractAdmin
                 ->add('inline')
                 ->add('route')
                 ->add('merge')
+                ->add('subscribe')
                 ->add('view', ChoiceType::class, [
                     'choices' => $this->getViews(true),
                     'required' => false,
@@ -79,6 +80,7 @@ final class MailAdmin extends AbstractAdmin
             ->add('name')
             ->add('schedules')
             ->add('dashboard')
+            ->add('subscribe')
             ->add('view', ChoiceFilter::class, [
                 'field_options' => [
                     'choices' => $this->getViews(true),
@@ -95,6 +97,7 @@ final class MailAdmin extends AbstractAdmin
             ->add('schedules')
             ->add('dashboard')
             ->add('variables')
+            ->add('subscribe')
             ->add('active')
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
