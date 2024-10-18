@@ -20,7 +20,7 @@ final class MailController extends AbstractController
      * @throws AccessDeniedException
      * @throws Exception
      */
-    public function sendAction(MailService $mailService, Request $request): Response
+    public function messageAction(MailService $mailService, Request $request): Response
     {
         $this->admin->checkAccess('list');
 
@@ -44,7 +44,7 @@ final class MailController extends AbstractController
             return $this->redirectToList();
         }
 
-        return $this->render('@SpyckVisualizationSonata/mail/send.html.twig', [
+        return $this->render('@SpyckVisualizationSonata/mail/message.html.twig', [
             'mail' => $mail,
             'token' => $this->getCsrfToken(MailController::class),
         ]);

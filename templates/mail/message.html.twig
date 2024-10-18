@@ -3,7 +3,7 @@
 {% block content %}
     <div class="sonata-ba-delete">
         <div class="box box-danger">
-            <form method="POST" action="{{ admin.generateObjectUrl('send', mail) }}">
+            <form method="POST" action="{{ admin.generateObjectUrl('message', mail) }}">
                 <input type="hidden" name="_sonata_csrf_token" value="{{ token }}">
                 <div class="box-header">
                     <h3 class="box-title">Confirm send e-mail</h3>
@@ -22,8 +22,8 @@
                     {% endfor %}
                 </div>
                 <div class="box-footer clearfix">
-                    <button type="submit" name="btn_delete" class="btn btn-danger"><i class="fas fa-envelope" aria-hidden="true"></i> Send e-mail</button>
-                    <a class="btn btn-success" href="{{ admin.generateUrl('list') }}"><i class="fas fa-list" aria-hidden="true"></i> Return to list</a>
+                    <button type="submit" name="btn_delete" class="btn btn-danger"><i class="fas fa-envelope" aria-hidden="true"></i> {{ 'Send e-mail'|trans({}, admin.translationdomain) }}</button>
+                    <a class="btn btn-success" href="{{ admin.generateUrl('list') }}"><i class="fas fa-list" aria-hidden="true"></i> {{ 'Return to list'|trans({}, admin.translationdomain) }}</a>
                 </div>
 
             </form>

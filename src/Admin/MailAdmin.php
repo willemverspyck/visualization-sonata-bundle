@@ -107,8 +107,8 @@ final class MailAdmin extends AbstractAdmin
                         'template' => '@SpyckVisualizationSonata/mail/list_action_log.html.twig',
                     ],
                     'delete' => [],
-                    'send' => [
-                        'template' => '@SpyckVisualizationSonata/mail/list_action_send.html.twig',
+                    'message' => [
+                        'template' => '@SpyckVisualizationSonata/mail/list_action_message.html.twig',
                     ],
                 ],
             ]);
@@ -117,7 +117,7 @@ final class MailAdmin extends AbstractAdmin
     protected function getAddRoutes(): iterable
     {
         yield 'clone';
-        yield 'send';
+        yield 'message';
     }
 
     protected function getRemoveRoutes(): iterable
