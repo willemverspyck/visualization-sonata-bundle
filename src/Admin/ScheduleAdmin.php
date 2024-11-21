@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\DoctrineORMAdminBundle\Filter\ClassFilter;
 use Spyck\VisualizationBundle\Entity\AbstractSchedule;
 use Spyck\VisualizationBundle\Entity\ScheduleForEvent;
 use Spyck\VisualizationBundle\Entity\ScheduleForSystem;
@@ -82,6 +83,9 @@ final class ScheduleAdmin extends AbstractAdmin
     {
         $datagrid
             ->add('name')
+            ->add('discriminator', ClassFilter::class, [
+                'sub_classes' => $this->getSubClasses(),
+            ])
             ->add('active');
     }
 
@@ -89,6 +93,7 @@ final class ScheduleAdmin extends AbstractAdmin
     {
         $list
             ->add('name')
+            ->add('discriminator')
             ->add('active')
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
