@@ -37,11 +37,6 @@ final class ScheduleAdmin extends AbstractAdmin
     {
         $subject = $this->getSubject();
 
-        $matchHours = range(0, 23);
-        $matchDays = range(1, 31);
-        $matchWeeks = range(1, 52);
-        $matchWeekdays = range(1, 7);
-
         $form
             ->with('Fields')
                 ->add('name', null, [
@@ -51,22 +46,22 @@ final class ScheduleAdmin extends AbstractAdmin
                     ->add('code')
                 ->ifEnd()
                 ->add('matchHours', ChoiceType::class, [
-                    'choices' => array_combine($matchHours, $matchHours),
+                    'choices' => $this->getMatchHours(),
                     'multiple' => true,
                     'required' => false,
                 ])
                 ->add('matchDays', ChoiceType::class, [
-                    'choices' => array_combine($matchDays, $matchDays),
+                    'choices' => $this->getMatchDays(),
                     'multiple' => true,
                     'required' => false,
                 ])
                 ->add('matchWeeks', ChoiceType::class, [
-                    'choices' => array_combine($matchWeeks, $matchWeeks),
+                    'choices' => $this->getMatchWeeks(),
                     'multiple' => true,
                     'required' => false,
                 ])
                 ->add('matchWeekdays', ChoiceType::class, [
-                    'choices' => array_combine($matchWeekdays, $matchWeekdays),
+                    'choices' => $this->getMatchWeekdays(),
                     'choice_label' => function (int $value) {
                         $date = new DateTimeImmutable('Sunday');
 
@@ -107,5 +102,36 @@ final class ScheduleAdmin extends AbstractAdmin
     protected function getRemoveRoutes(): iterable
     {
         yield 'show';
+    }
+
+    private function getMatchHours(): array
+    {
+        $hours = range(0, 23);
+
+        return array_combine($hours, $hours);
+    }
+
+    private function getMatchDays(): array
+    {
+        $days = range(1, 31);
+
+        $data = array_combine($days, $days);
+        $data['Last Day of the Month'] = 'L';
+
+        return $data;
+    }
+
+    private function getMatchWeeks(): array
+    {
+        $weeks = range(1, 52);
+
+        return array_combine($weeks, $weeks);
+    }
+
+    private function getMatchWeekdays(): array
+    {
+        $weekdays = range(1, 7);
+
+        return array_combine($weekdays, $weekdays);
     }
 }
