@@ -8,7 +8,9 @@ use DateTimeImmutable;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\DoctrineORMAdminBundle\Filter\ClassFilter;
+use Spyck\SonataExtension\Utility\DateTimeUtility;
 use Spyck\VisualizationBundle\Entity\AbstractSchedule;
 use Spyck\VisualizationBundle\Entity\ScheduleForEvent;
 use Spyck\VisualizationBundle\Entity\ScheduleForSystem;
@@ -99,9 +101,27 @@ final class ScheduleAdmin extends AbstractAdmin
             ]);
     }
 
+    protected function configureShowFields(ShowMapper $showMapper): void
+    {
+        $showMapper
+            ->add('name')
+            ->add('code')
+            ->add('matchHours')
+            ->add('matchDays')
+            ->add('matchWeeks')
+            ->add('matchWeekdays')
+            ->add('active')
+            ->add('timestampCreated', null, [
+                'format' => DateTimeUtility::FORMAT_DATETIME,
+            ])
+            ->add('timestampUpdated', null, [
+                'format' => DateTimeUtility::FORMAT_DATETIME,
+            ]);
+    }
+
     protected function getRemoveRoutes(): iterable
     {
-        yield 'show';
+        return [];
     }
 
     private function getMatchHours(): array
