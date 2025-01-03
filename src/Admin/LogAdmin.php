@@ -15,6 +15,7 @@ use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Sonata\DoctrineORMAdminBundle\Filter\NullFilter;
 use Spyck\SonataExtension\Filter\DateRangeFilter;
 use Spyck\SonataExtension\Utility\AutocompleteUtility;
+use Spyck\SonataExtension\Utility\DateTimeUtility;
 use Spyck\VisualizationBundle\Entity\Log;
 use Spyck\VisualizationBundle\Service\ViewService;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
@@ -86,7 +87,7 @@ final class LogAdmin extends AbstractAdmin
             ->add('dashboard')
             ->add('user')
             ->add('timestamp', null, [
-                'format' => 'Y-m-d H:i:s',
+                'format' => DateTimeUtility::FORMAT_DATETIME,
             ])
             ->add('variables')
             ->add('view', FieldDescriptionInterface::TYPE_CHOICE, [
