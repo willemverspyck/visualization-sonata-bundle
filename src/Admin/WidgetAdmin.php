@@ -48,13 +48,16 @@ final class WidgetAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagrid): void
     {
         $datagrid
+            ->add('group')
             ->add('name')
-            ->add('adapter');
+            ->add('adapter')
+            ->add('active');
     }
 
     protected function configureListFields(ListMapper $list): void
     {
         $list
+            ->add('group')
             ->add('name')
             ->add('adapter')
             ->add('active')
