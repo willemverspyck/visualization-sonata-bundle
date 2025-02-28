@@ -53,8 +53,8 @@ final class MailAdmin extends AbstractAdmin
                 ->add('variables', ParameterType::class, [
                     'required' => false,
                 ])
-                ->add('inline')
                 ->add('route')
+                ->add('inline')
                 ->add('merge')
                 ->add('subscribe')
                 ->add('view', ChoiceType::class, [
