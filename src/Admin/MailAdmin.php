@@ -112,7 +112,6 @@ final class MailAdmin extends AbstractAdmin
     {
         $list
             ->add('name')
-            ->add('users')
             ->add('schedules')
             ->add('dashboard')
             ->add('variables')
