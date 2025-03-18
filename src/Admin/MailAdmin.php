@@ -8,7 +8,9 @@ use Exception;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Sonata\DoctrineORMAdminBundle\Filter\ChoiceFilter;
+use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Spyck\SonataExtension\Form\Type\ParameterType;
 use Spyck\VisualizationBundle\Entity\Mail;
 use Spyck\VisualizationBundle\Entity\UserInterface;
@@ -78,8 +80,24 @@ final class MailAdmin extends AbstractAdmin
     {
         $datagrid
             ->add('name')
+            ->add('users', ModelFilter::class, [
+                'field_options' => [
+                    'property' => [
+                        'email',
+                        'name',
+                    ],
+                ],
+                'field_type' => ModelAutocompleteType::class,
+            ])
             ->add('schedules')
-            ->add('dashboard')
+            ->add('dashboard', ModelFilter::class, [
+                'field_options' => [
+                    'property' => [
+                        'name',
+                    ],
+                ],
+                'field_type' => ModelAutocompleteType::class,
+            ])
             ->add('subscribe')
             ->add('view', ChoiceFilter::class, [
                 'field_options' => [
@@ -94,6 +112,7 @@ final class MailAdmin extends AbstractAdmin
     {
         $list
             ->add('name')
+            ->add('users')
             ->add('schedules')
             ->add('dashboard')
             ->add('variables')
