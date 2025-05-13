@@ -8,8 +8,11 @@ use Exception;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
+use Sonata\DoctrineORMAdminBundle\Filter\ModelFilter;
 use Spyck\SonataExtension\Form\Type\ParameterType;
 use Spyck\VisualizationBundle\Entity\Preload;
+use Spyck\VisualizationBundle\Entity\UserInterface;
 use Spyck\VisualizationSonataBundle\Controller\PreloadController;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
@@ -38,6 +41,12 @@ final class PreloadAdmin extends AbstractAdmin
                 ->add('variables', ParameterType::class, [
                     'required' => false,
                 ])
+                ->ifTrue($this->isInstanceOf(UserInterface::class))
+                    ->add('users', null, [
+                        'multiple' => true,
+                        'required' => true,
+                    ])
+                ->ifEnd()
                 ->add('active')
             ->end();
     }
@@ -50,6 +59,15 @@ final class PreloadAdmin extends AbstractAdmin
         $datagrid
             ->add('schedules')
             ->add('dashboard')
+            ->add('users', ModelFilter::class, [
+                'field_options' => [
+                    'property' => [
+                        'email',
+                        'name',
+                    ],
+                ],
+                'field_type' => ModelAutocompleteType::class,
+            ])
             ->add('active');
     }
 
