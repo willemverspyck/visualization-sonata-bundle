@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Spyck\VisualizationSonataBundle\Admin;
 
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Form\Type\ModelAutocompleteType;
 use Spyck\SonataExtension\Form\Type\ParameterType;
+use Spyck\SonataExtension\Utility\AutocompleteUtility;
 use Spyck\VisualizationBundle\Entity\Block;
 use Spyck\VisualizationBundle\Entity\Widget;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
@@ -21,7 +23,13 @@ final class BlockAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->add('widget', null, [
+            ->add('widget', ModelAutocompleteType::class, [
+                'callback' => [AutocompleteUtility::class, 'callbackForm'],
+                'placeholder' => 'Choose widget',
+                'property' => [
+                    'name',
+                    'adapter',
+                ],
                 'required' => true,
             ])
             ->add('name', null, [
