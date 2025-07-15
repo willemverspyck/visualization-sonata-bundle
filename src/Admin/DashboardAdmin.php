@@ -14,9 +14,11 @@ use Spyck\SonataExtension\Form\Type\ParameterType;
 use Spyck\SonataExtension\Utility\AutocompleteUtility;
 use Spyck\VisualizationBundle\Entity\Dashboard;
 use Spyck\VisualizationBundle\Entity\UserInterface;
+use Spyck\VisualizationSonataBundle\Controller\DashboardController;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 #[AutoconfigureTag('sonata.admin', [
+    'controller' => DashboardController::class,
     'group' => 'Visualization',
     'manager_type' => 'orm',
     'model_class' => Dashboard::class,
@@ -83,9 +85,17 @@ final class DashboardAdmin extends AbstractAdmin
                         'template' => '@SpyckVisualizationSonata/dashboard/list_action_show.html.twig',
                     ],
                     'edit' => [],
+                    'cache' => [
+                        'template' => '@SpyckVisualizationSonata/widget/list_action_cache.html.twig',
+                    ],
                     'delete' => [],
                 ],
             ]);
+    }
+
+    protected function getAddRoutes(): iterable
+    {
+        yield 'cache';
     }
 
     protected function getRemoveRoutes(): iterable
