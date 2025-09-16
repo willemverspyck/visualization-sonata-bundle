@@ -48,6 +48,7 @@ final class BlockAdmin extends AbstractAdmin
             ])
             ->add('filter')
             ->add('filterView')
+            ->add('lazy')
             ->add('active')
             ->add('position');
     }
