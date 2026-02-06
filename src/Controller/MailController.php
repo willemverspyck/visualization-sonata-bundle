@@ -35,7 +35,7 @@ final class MailController extends AbstractController
 
             foreach ($mail->getUsers() as $user) {
                 if (in_array($user->getId(), $userIds, true)) {
-                    $mailService->executeMailAsMessage($mail, $user);
+                    $mailService->executeMailForUserAsMessage($mail, $user);
                 }
             }
 
