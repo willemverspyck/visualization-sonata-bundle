@@ -43,6 +43,9 @@ final class MailAdmin extends AbstractAdmin
                 ->add('name', null, [
                     'required' => true,
                 ])
+                ->add('code', null, [
+                    'required' => false,
+                ])
                 ->add('description', null, [
                     'required' => false,
                 ])
