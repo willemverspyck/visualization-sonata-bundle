@@ -33,7 +33,7 @@ final class DashboardAdmin extends AbstractAdmin
                 ->add('name')
                 ->add('description')
                 ->add('code')
-                ->add('category')
+                ->add('categories')
                 ->add('blocks', CollectionType::class, [], [
                     'edit' => 'inline',
                     'inline' => 'table',

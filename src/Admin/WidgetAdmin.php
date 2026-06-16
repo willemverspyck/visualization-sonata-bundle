@@ -8,6 +8,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Spyck\VisualizationBundle\Entity\Widget;
+use Spyck\VisualizationBundle\Service\ChartService;
 use Spyck\VisualizationSonataBundle\Controller\WidgetController;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -21,6 +22,11 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 ])]
 final class WidgetAdmin extends AbstractAdmin
 {
+    public function __construct(private readonly ChartService $chartService)
+    {
+        parent::__construct();
+    }
+
     /**
      * Option "by_reference" in "charts" needed to use the "setCharts" method in entity. Otherwise, sortable doesn't work.
      */
@@ -35,7 +41,7 @@ final class WidgetAdmin extends AbstractAdmin
                 ->add('adapter')
                 ->add('charts', ChoiceType::class, [
                     'by_reference' => false,
-                    'choices' => Widget::getChartData(true),
+                    'choices' => array_flip($this->chartService->getChartsWithTranslation()),
                     'multiple' => true,
                     'required' => false,
                     'sortable' => true,

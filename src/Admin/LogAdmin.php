@@ -60,7 +60,7 @@ final class LogAdmin extends AbstractAdmin
             ->add('timestamp', DateRangeFilter::class)
             ->add('view', ChoiceFilter::class, [
                 'field_options' => [
-                    'choices' => $this->getViews(true),
+                    'choices' => array_flip($this->viewService->getViewsWithTranslation()),
                 ],
                 'field_type' => ChoiceType::class,
             ])
@@ -91,7 +91,7 @@ final class LogAdmin extends AbstractAdmin
             ])
             ->add('variables')
             ->add('view', FieldDescriptionInterface::TYPE_CHOICE, [
-                'choices' => $this->getViews(),
+                'choices' => $this->viewService->getViewsWithTranslation(),
             ])
             ->add('type', FieldDescriptionInterface::TYPE_CHOICE, [
                 'choices' => Log::getTypes(false),
@@ -115,19 +115,5 @@ final class LogAdmin extends AbstractAdmin
         yield 'create';
         yield 'delete';
         yield 'edit';
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function getViews(bool $inverse = false): array
-    {
-        $data = $this->viewService->getViews();
-
-        if (false === $inverse) {
-            return $data;
-        }
-
-        return array_flip($data);
     }
 }

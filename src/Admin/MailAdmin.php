@@ -64,7 +64,7 @@ final class MailAdmin extends AbstractAdmin
                 ->add('merge')
                 ->add('subscribe')
                 ->add('view', ChoiceType::class, [
-                    'choices' => $this->getViews(true),
+                    'choices' => array_flip($this->viewService->getViewsWithTranslation()),
                     'required' => false,
                 ])
                 ->ifTrue($this->isInstanceOf(UserInterface::class))
@@ -105,7 +105,7 @@ final class MailAdmin extends AbstractAdmin
             ->add('subscribe')
             ->add('view', ChoiceFilter::class, [
                 'field_options' => [
-                    'choices' => $this->getViews(true),
+                    'choices' => array_flip($this->viewService->getViewsWithTranslation()),
                 ],
                 'field_type' => ChoiceType::class,
             ])
@@ -148,19 +148,5 @@ final class MailAdmin extends AbstractAdmin
     protected function getRemoveRoutes(): iterable
     {
         yield 'show';
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function getViews(bool $inverse = false): array
-    {
-        $data = $this->viewService->getViews();
-
-        if (false === $inverse) {
-            return $data;
-        }
-
-        return array_flip($data);
     }
 }

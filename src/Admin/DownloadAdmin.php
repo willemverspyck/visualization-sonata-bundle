@@ -76,7 +76,7 @@ final class DownloadAdmin extends AbstractAdmin
                 ])
                 ->add('name')
                 ->add('view', ChoiceType::class, [
-                    'choices' => $this->getViews(true),
+                    'choices' => array_flip($this->viewService->getViewsWithTranslation()),
                     'required' => true,
                 ])
                 ->add('variables', ParameterType::class, [
@@ -112,7 +112,7 @@ final class DownloadAdmin extends AbstractAdmin
             ->add('name')
             ->add('view', ChoiceFilter::class, [
                 'field_options' => [
-                    'choices' => $this->getViews(true),
+                    'choices' => array_flip($this->viewService->getViewsWithTranslation()),
                 ],
                 'field_type' => ChoiceType::class,
             ]);
@@ -125,7 +125,7 @@ final class DownloadAdmin extends AbstractAdmin
             ->add('widget')
             ->add('name')
             ->add('view', FieldDescriptionInterface::TYPE_CHOICE, [
-                'choices' => $this->getViews(),
+                'choices' => $this->viewService->getViewsWithTranslation(),
             ])
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
@@ -137,19 +137,5 @@ final class DownloadAdmin extends AbstractAdmin
                     'delete' => [],
                 ],
             ]);
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function getViews(bool $inverse = false): array
-    {
-        $data = $this->viewService->getViews();
-
-        if (false === $inverse) {
-            return $data;
-        }
-
-        return array_flip($data);
     }
 }
