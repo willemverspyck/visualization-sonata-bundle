@@ -24,6 +24,7 @@ final class CategoryAdmin extends AbstractAdmin
             ->with('Fields')
                 ->add('name')
                 ->add('description')
+                ->add('position')
                 ->add('active')
             ->end();
     }
@@ -39,6 +40,7 @@ final class CategoryAdmin extends AbstractAdmin
     {
         $list
             ->add('name')
+            ->add('position')
             ->add('active')
             ->add(ListMapper::NAME_ACTIONS, null, [
                 'actions' => [
