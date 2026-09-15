@@ -33,6 +33,7 @@ final class MenuAdmin extends AbstractAdmin
                     'required' => false,
                 ])
                 ->add('name')
+                ->add('code')
                 ->add('dashboard', ModelAutocompleteType::class, [
                     'callback' => [AutocompleteUtility::class, 'callbackForm'],
                     'property' => [

@@ -23,6 +23,7 @@ final class CategoryAdmin extends AbstractAdmin
         $form
             ->with('Fields')
                 ->add('name')
+                ->add('description')
                 ->add('active')
             ->end();
     }
