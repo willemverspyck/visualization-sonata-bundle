@@ -23,6 +23,7 @@ final class CategoryAdmin extends AbstractAdmin
         $form
             ->with('Fields')
                 ->add('name')
+                ->add('code')
                 ->add('description')
                 ->add('position')
                 ->add('active')
@@ -33,6 +34,7 @@ final class CategoryAdmin extends AbstractAdmin
     {
         $datagrid
             ->add('name')
+            ->add('code')
             ->add('active');
     }
 
