@@ -38,6 +38,7 @@ final class WidgetAdmin extends AbstractAdmin
                 ->add('name')
                 ->add('description')
                 ->add('descriptionEmpty')
+                ->add('summary')
                 ->add('adapter')
                 ->add('charts', ChoiceType::class, [
                     'by_reference' => false,
@@ -56,6 +57,7 @@ final class WidgetAdmin extends AbstractAdmin
         $datagrid
             ->add('group')
             ->add('name')
+            ->add('summary')
             ->add('adapter')
             ->add('active');
     }
@@ -65,6 +67,7 @@ final class WidgetAdmin extends AbstractAdmin
         $list
             ->add('group')
             ->add('name')
+            ->add('summary')
             ->add('adapter')
             ->add('active')
             ->add(ListMapper::NAME_ACTIONS, null, [
