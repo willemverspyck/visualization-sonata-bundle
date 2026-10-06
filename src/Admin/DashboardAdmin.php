@@ -32,6 +32,7 @@ final class DashboardAdmin extends AbstractAdmin
             ->with('Fields')
                 ->add('name')
                 ->add('description')
+                ->add('keywords')
                 ->add('code')
                 ->add('categories')
                 ->add('blocks', CollectionType::class, [], [
